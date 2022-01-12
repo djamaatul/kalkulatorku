@@ -19,11 +19,45 @@ export default function Display() {
 				setOutput('');
 				break;
 			case 'CE':
-				setOutput(output.substring(0, output.length - 1));
+				setOutput(output.slice(0, output.length - 1));
 				break;
 			case '=':
-				break;
+				let arrayOutput = output.match(/\d+|[+,-,\/,*,%]/g);
+				arrayOutput.map((e, i) => {
+					if (i % 2 == 0) {
+						arrayOutput[i] = parseInt(e);
+					}
+				});
+				arrayOutput.reduce((result, current, index, array) => {
+					if (index % 2 !== 0) {
+						switch (current) {
+							case '+':
+								result += array[index + 1];
+								break;
+							case '-':
+								result -= array[index + 1];
+								break;
 
+							case '*':
+								result *= array[index + 1];
+								break;
+
+							case '/':
+								result /= array[index + 1];
+								break;
+
+							case '%':
+								result %= array[index + 1];
+								break;
+
+							default:
+								return result;
+						}
+					}
+					setOutput(result.toString());
+					return result;
+				}, arrayOutput[0]);
+				break;
 			default:
 				setOutput(output + value);
 				break;
