@@ -4,18 +4,32 @@ import { useState } from 'react';
 import Keypad from '../components/Keypad';
 
 export default function Display() {
-	const [output, setOutput] = useState('1234');
+	const [output, setOutput] = useState('');
 	const keypad = [
-		[1, 2, '-', '+'],
-		[3, 4, '/', '*'],
-		[5, 6, '%', '='],
-		[7, 8, 9, 0],
+		['C', 'CE', '(', ')'],
+		[1, 2, 3, '%'],
+		[4, 5, 6, '*'],
+		[7, 8, 9, '/'],
+		[0, '-', '+', '='],
 	];
 
 	const handleClick = (value) => {
-		setOutput(output + value);
-	};
+		switch (value) {
+			case 'C':
+				setOutput('');
+				break;
+			case 'CE':
+				setOutput(output.substring(0, output.length - 1));
+				break;
+			case '=':
+				setOutput(eval(output).toString());
+				break;
 
+			default:
+				setOutput(output + value);
+				break;
+		}
+	};
 	return (
 		<View>
 			<View style={style.title}>
@@ -24,22 +38,23 @@ export default function Display() {
 			<View style={style.output}>
 				<Text style={style.outputText}>{output}</Text>
 			</View>
-			{keypad.map((e, index) => {
-				return (
-					<View style={style.keypadRow} key={index}>
-						{e.map((val) => {
-							let typee = typeof val;
-							return (
-								<Keypad
-									value={val.toString()}
-									type={typee !== 'number' ? 'number' : 'operator'}
-									handleClick={handleClick}
-								/>
-							);
-						})}
-					</View>
-				);
-			})}
+			<View style={style.keypadContainer}>
+				{keypad.map((e, index) => {
+					return (
+						<View style={style.keypadRow} key={index}>
+							{e.map((val, index) => {
+								return (
+									<Keypad
+										key={index}
+										value={val.toString()}
+										handleClick={() => handleClick(val.toString())}
+									/>
+								);
+							})}
+						</View>
+					);
+				})}
+			</View>
 		</View>
 	);
 }
@@ -60,15 +75,19 @@ const style = StyleSheet.create({
 		alignItems: 'flex-end',
 		justifyContent: 'center',
 		paddingRight: 20,
+		borderWidth: 1,
+		borderColor: 'white',
 	},
 	outputText: {
 		color: 'white',
 		fontSize: 20,
 		fontWeight: 'bold',
 	},
+	keypadContainer: {
+		margin: 20,
+	},
 	keypadRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',
-		paddingHorizontal: 20,
 	},
 });
