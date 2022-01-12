@@ -22,7 +22,7 @@ export default function Display() {
 				setOutput(output.slice(0, output.length - 1));
 				break;
 			case '=':
-				let arrayOutput = output.match(/\d+|[+,-,\/,*,%]/g);
+				let arrayOutput = output.match(/\d+|[-]\d+|[+,*,\/,%,-]/g);
 				arrayOutput.map((e, i) => {
 					if (i % 2 == 0) {
 						arrayOutput[i] = parseInt(e);
