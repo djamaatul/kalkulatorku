@@ -22,7 +22,6 @@ export default function Display() {
 				setOutput(output.substring(0, output.length - 1));
 				break;
 			case '=':
-				setOutput(eval(output).toString());
 				break;
 
 			default:
