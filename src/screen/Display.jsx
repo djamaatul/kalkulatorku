@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ToastAndroid } from 'react-native';
 import { useState } from 'react';
 
 import Keypad from '../components/Keypad';
@@ -22,7 +22,11 @@ export default function Display() {
 				setOutput(output.substring(0, output.length - 1));
 				break;
 			case '=':
-				setOutput(eval(output).toString());
+				try {
+					setOutput(eval(output).toString());
+				} catch (error) {
+					ToastAndroid.show('invalid calculate', ToastAndroid.SHORT);
+				}
 				break;
 
 			default:

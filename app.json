@@ -19,7 +19,7 @@
 		},
 		"android": {
 			"package": "com.djamaatul.kalkulatorku",
-			"versionCode": 2,
+			"versionCode": 2.1,
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#FFFFFF"
